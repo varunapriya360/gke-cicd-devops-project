@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cicd-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cicd
+  template:
+    metadata:
+      labels:
+        app: cicd
+    spec:
+      containers:
+      - name: app
+        image: asia-south1-docker.pkg.dev/gke-cicd-project/cicd-repo/cicd-app:latest
+        ports:
+        - containerPort: 5000
