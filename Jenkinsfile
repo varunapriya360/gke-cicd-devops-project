@@ -8,12 +8,6 @@ pipeline {
     }
 
     stages {
-        stage('Clone Repo') {
-            steps {
-                git 'https://github.com/varunapriya360/gke-cicd-devops-project.git'
-            }
-        }
-
         stage('Build Docker Image') {
             steps {
                 script {
