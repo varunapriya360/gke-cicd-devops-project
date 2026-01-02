@@ -8,16 +8,13 @@ pipeline {
     }
 
     stages {
-        stage('Clone Repo') {
-            steps {
-                git branch: 'main', url: 'https://github.com/varunapriya360/gke-cicd-devops-project.git'
-            }
-        }
 
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh "docker build -t ${IMAGE} ."
+                    sh '''
+                    docker build --no-cache -t ${IMAGE} .
+                    '''
                 }
             }
         }
@@ -25,8 +22,10 @@ pipeline {
         stage('Push to Artifact Registry') {
             steps {
                 script {
-                    sh "gcloud auth configure-docker asia-south1-docker.pkg.dev --quiet"
-                    sh "docker push ${IMAGE}"
+                    sh '''
+                    gcloud auth configure-docker asia-south1-docker.pkg.dev --quiet
+                    docker push ${IMAGE}
+                    '''
                 }
             }
         }
@@ -34,8 +33,10 @@ pipeline {
         stage('Deploy to GKE') {
             steps {
                 script {
-                    sh "gcloud container clusters get-credentials cicd-gke-cluster --region ${REGION}"
-                    sh "kubectl apply -f k8s/"
+                    sh '''
+                    gcloud container clusters get-credentials cicd-gke-cluster --region ${REGION}
+                    kubectl apply -f k8s/
+                    '''
                 }
             }
         }
@@ -50,3 +51,4 @@ pipeline {
         }
     }
 }
+
