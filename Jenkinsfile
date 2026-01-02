@@ -13,7 +13,7 @@ pipeline {
             steps {
                 script {
                     sh '''
-                    sh 'docker build --no-cache -t asia-south1-docker.pkg.dev/gke-cicd-project/cicd-repo/cicd-app:latest .'
+                    'docker build --no-cache -t asia-south1-docker.pkg.dev/gke-cicd-project/cicd-repo/cicd-app:latest .'
 
                     '''
                 }
